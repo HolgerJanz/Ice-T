@@ -31,23 +31,13 @@ cp ../Doc/vt102.txt release/
 cp ../Doc/icet_cfg.h release/
 cp ../utils/AnimationDemo/icetdemo.vt release/
 
-./dir2atr.exe -d -m -b MyDos4534 1040 icet.atr atrdisk
+./dir2atr -d -m -b MyDos4534 1040 icet.atr atrdisk
 #/mnt/c/Users/Itay/Emulators/Atari/ATasm/Projects/Ice-T/Build/dir2atr.exe -d -m -b MyDos4534 1040 icet.atr atrdisk
 cp icet.atr release/
 
-BUILD_DIR=`pwd`
-cd /mnt/c
-PROG_FILES=$(wslpath -au "$(cmd.exe /c 'echo %programfiles%' | tr -d '\r\n')")
-cd ${BUILD_DIR}/release
-"${PROG_FILES}/7-Zip/7z.exe" a ../release.zip *
+cd release
+7z a ../release.zip *
 cd ..
 rm -rf atrdisk
 rm -rf release
 
-# run Altirra if user specified -a
-if [ "$1" = "-a" ]; then
-  /mnt/c/Users/Itay/Emulators/Atari/Altirra/Altirra64.exe icet.atr
-else
-  echo
-  echo "Note: you can run Altirra with -a."
-fi

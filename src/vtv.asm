@@ -837,9 +837,9 @@ tilmesg3
 svscrlms
 	.byte	"Version "
 version_str
-	.byte 	"2.8.2"
+	.byte 	"2.8.3"
 version_str_end
-	.byte	", July 13, 2025. Contact: itaych@gmail.com"
+	.byte	", Nov 16, 2026. Contact: holgerjanz@abbuc.social"
 tilmesg3_end
 
 tilmesg3_len = tilmesg3_end-svscrlms

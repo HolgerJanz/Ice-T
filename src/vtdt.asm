@@ -17,8 +17,8 @@ tilmesg4
 	.byte	(80-71)/2,13,71
 	.byte	"This software is free, but donations are always appreciated (via Paypal"
 tilmesg5
-	.byte	(80-25)/2,14,25
-	.byte	"using the address above)."
+	.byte	(80-36)/2,14,36
+	.byte	"using the address itaych@gmail.com)."
 tilmesg6
 	.byte	$A4, $BD, $E8, $87, $F1, $C0, $D7, $C8, $CC, $CB, $C4, $C9, $85, $CF, $C0, $85
 	.byte	$D1, $82, $C4, $CC, $C8, $C0, $89, $85, $EC, $85, $C9, $CA, $D3, $C0, $85, $DC

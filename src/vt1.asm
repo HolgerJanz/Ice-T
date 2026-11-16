@@ -70,17 +70,6 @@ init_continued
 	jsr rt8_to_menu_convert
 	ldx #RT8_HOUR
 	jsr rt8_read
-	cmp #$00	; convert 24hr format to 12hr
-	bne ?no0
-	lda #$12
-?no0
-	cmp #$13
-	bcc ?no_over12
-	sed			; never thought I'd actually use this instruction
-	sec
-	sbc #$12
-	cld
-?no_over12
 	ldx #3
 	jsr rt8_to_menu_convert
 ?no_rt8
@@ -2793,7 +2782,7 @@ setcolors
 	pha			; multiply by 4, also keep for later
 	ldx private_colors_set	; Are private colors set?
 	beq ?no_priv_colors		; no (usual state), go set colors
-	ldy #3
+	ldy #2
 ?priv_lp
 	lda private_colors,y
 	sta color1,y
@@ -2815,7 +2804,7 @@ setcolors
 	and #$f0		; remove the luminance bits so we can reuse the hue for next iteration
 	inx
 	iny
-	cpy #4
+	cpy #3
 	bne ?l
 
 ?skip_colors
@@ -3241,7 +3230,7 @@ macro_find_data
 	*=	banked_memory_top+4
 
 ststmr_clear	.byte	"00:00:00"
-menuclk_clear	.byte	"12:00:00"
+menuclk_clear	.byte	"00:00:00"
 
 initial_program_entry
 	cld
@@ -3389,7 +3378,6 @@ initial_program_entry
 	jsr $703	; kernel entry
 	; hh/mm/ss are in $77e/f/80 in 24-hr format.
 	lda $77e	; hours
-	jsr ?check_13
 	pha
 	lda $77f	; minutes
 	pha
@@ -3397,27 +3385,18 @@ initial_program_entry
 	pha
 	jmp ?setmenutime
 
-?check_13
-	cmp #13
-	bcc ?no_hr_12
-	sec
-	sbc #12		; convert to 12-hour format
-?no_hr_12
-	rts
-
 ?getbwdostime
 	jmp ($706)
 ?bwdostime
 	jsr ?getbwdostime	; get time from BW-DOS
 	ldy #16 		; 24-hr format for European BW-DOS
-	lda (dosvec),Y	; hours
-	jsr ?check_13
+	lda (dosvec),y	; hours
 	pha
 	iny
-	lda (dosvec),Y	; minutes
+	lda (dosvec),y	; minutes
 	pha
 	iny
-	lda (dosvec),Y	; seconds
+	lda (dosvec),y	; seconds
 	pha
 
 ?setmenutime

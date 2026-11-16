@@ -2536,7 +2536,7 @@ icet_privcode_screen_colors
 	jmp fincmnd
 
 preserve_screen_colors
-	ldy #3
+	ldy #2
 ?lp
 	lda color1,y
 	sta private_colors,y
